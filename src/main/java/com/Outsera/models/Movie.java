@@ -13,7 +13,7 @@ public class Movie {
     @Column(name = "id")
     private UUID movieId;
 
-    private int movieYear;
+    private Integer movieYear;
 
     private String title;
 
@@ -39,12 +39,12 @@ public class Movie {
         this.movieId = movieId;
     }
 
-    public int getYear() {
+    public Integer getMovieYear() {
         return movieYear;
     }
 
-    public void setYear(int year) {
-        this.movieYear = year;
+    public void setMovieYear(Integer movieYear) {
+        this.movieYear = movieYear;
     }
 
     public String getTitle() {
