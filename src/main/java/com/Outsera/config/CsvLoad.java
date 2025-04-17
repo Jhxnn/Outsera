@@ -25,7 +25,7 @@ public class CsvLoad implements CommandLineRunner {
             reader.readLine();
             while ((line = reader.readLine()) != null) {
                 Movie movie = new Movie();
-                String[] partes = line.split(";", -1);
+                String[] partes = line.split(";");
                 movie.setYear(Integer.parseInt(partes[0]));
                 movie.setTitle(partes[1]);
                 movie.setStudios(partes[2]);
