@@ -13,13 +13,23 @@ public class Movie {
     @Column(name = "id")
     private UUID movieId;
 
-    private int year;
+    private int movieYear;
 
     private String title;
+
+    private String studios;
 
     private String producers;
 
     private String winner;
+
+    public String getStudios() {
+        return studios;
+    }
+
+    public void setStudios(String studios) {
+        this.studios = studios;
+    }
 
     public UUID getMovieId() {
         return movieId;
@@ -30,11 +40,11 @@ public class Movie {
     }
 
     public int getYear() {
-        return year;
+        return movieYear;
     }
 
     public void setYear(int year) {
-        this.year = year;
+        this.movieYear = year;
     }
 
     public String getTitle() {
