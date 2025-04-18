@@ -27,6 +27,25 @@ public class Movie {
         return studios;
     }
 
+    public Movie(Integer movieYear, String title, String studios, String producers, String winner) {
+        this.movieYear = movieYear;
+        this.title = title;
+        this.studios = studios;
+        this.producers = producers;
+        this.winner = winner;
+    }
+
+    public Movie(String winner, String producers, String studios, String title, Integer movieYear) {
+        this.winner = winner;
+        this.producers = producers;
+        this.studios = studios;
+        this.title = title;
+        this.movieYear = movieYear;
+    }
+    public Movie(){
+
+    }
+
     public void setStudios(String studios) {
         this.studios = studios;
     }
