@@ -32,6 +32,7 @@ public class MovieController {
         return ResponseEntity.status(HttpStatus.OK).body(movieService.findById(id));
     }
 
+    @Operation(description = "Ver o maior e menor intervalo de prêmios de um produtor")
     @GetMapping("/interval")
     public ResponseEntity<IntervalResponseDto> findMaxInterval(){
         return ResponseEntity.status(HttpStatus.OK).body(movieService.findIntervals());
