@@ -1,5 +1,6 @@
 package com.Outsera.controllers;
 
+import com.Outsera.dtos.IntervalResponseDto;
 import com.Outsera.dtos.MovieDto;
 import com.Outsera.models.Movie;
 import com.Outsera.services.MovieService;
@@ -29,6 +30,11 @@ public class MovieController {
     @GetMapping("/{id}")
     public ResponseEntity<Movie> findById(@PathVariable(name = "id")UUID id){
         return ResponseEntity.status(HttpStatus.OK).body(movieService.findById(id));
+    }
+
+    @GetMapping("/interval")
+    public ResponseEntity<IntervalResponseDto> findMaxInterval(){
+        return ResponseEntity.status(HttpStatus.OK).body(movieService.findIntervals());
     }
 
     @Operation(description = "Cria um filme")
