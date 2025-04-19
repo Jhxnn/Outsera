@@ -47,12 +47,10 @@ public class MovieServiceTest {
         assertNotNull(min);
         assertNotNull(max);
 
-        // Produtor 2: 2010 -> 2020 = 10, 2020 -> 2022 = 2 => menor intervalo: 2
         boolean hasMin = min.stream()
                 .anyMatch(i -> i.producer().equals("Produtor 2") && i.interval() == 2 && i.previousWin() == 2020 && i.followingWin() == 2022);
         assertTrue(hasMin);
 
-        // Produtor 2: maior intervalo = 10 (2010 -> 2020)
         boolean hasMax = max.stream()
                 .anyMatch(i -> i.producer().equals("Produtor 2") && i.interval() == 10 && i.previousWin() == 2010 && i.followingWin() == 2020);
         assertTrue(hasMax);

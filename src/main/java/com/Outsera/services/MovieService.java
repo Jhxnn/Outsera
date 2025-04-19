@@ -33,7 +33,7 @@ public class MovieService {
         Map<String, List<Integer>> producerWins = new HashMap<>();
 
         for (Movie movie : movies) {
-            String[] producers = movie.getProducers().split(",| and "); // trata múltiplos produtores
+            String[] producers = movie.getProducers().split(",| and ");
             for (String producer : producers) {
                 producer = producer.trim();
                 producerWins
