@@ -1,17 +1,17 @@
 package com.Outsera;
-
-import com.Outsera.dtos.IntervalItemDto;
 import com.Outsera.dtos.IntervalResponseDto;
-import com.Outsera.models.Movie;
-import com.Outsera.repositories.MovieRepository;
 import com.Outsera.services.MovieService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.ResourceUtils;
 
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,39 +20,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MovieServiceTest {
 
     @Autowired
-    private MovieService movieService;
+    MovieService movieService;
 
-    @Autowired
-    private MovieRepository movieRepository;
+    private static ObjectMapper mapper = new ObjectMapper();
 
     @BeforeAll
-    void setup() {
-        movieRepository.deleteAll();
-
-        movieRepository.save(new Movie(2000, "Filme A", "Estudio", "Produtor 1", "yes"));
-        movieRepository.save(new Movie(2002, "Filme B", "Estudio", "Produtor 1", "yes"));
-        movieRepository.save(new Movie(2010, "Filme C", "Estudio", "Produtor 2", "yes"));
-        movieRepository.save(new Movie(2020, "Filme D", "Estudio", "Produtor 2", "yes"));
-        movieRepository.save(new Movie(2022, "Filme E", "Estudio", "Produtor 2", "yes"));
-        movieRepository.save(new Movie(2021, "Filme F", "Estudio", "Produtor 3", "no"));
+    static void setup() {
     }
 
     @Test
-    void testFindIntervals() {
+    void testFindIntervalsMatchesExpectedJsonFile() throws IOException {
         IntervalResponseDto response = movieService.findIntervals();
 
-        List<IntervalItemDto> min = response.min();
-        List<IntervalItemDto> max = response.max();
+        File expectedFile = ResourceUtils.getFile("classpath:expected_intervals.json");
+        String expectedJson = new String(java.nio.file.Files.readAllBytes(expectedFile.toPath()));
 
-        assertNotNull(min);
-        assertNotNull(max);
+        String actualJson = mapper.writeValueAsString(response);
 
-        boolean hasMin = min.stream()
-                .anyMatch(i -> i.producer().equals("Produtor 2") && i.interval() == 2 && i.previousWin() == 2020 && i.followingWin() == 2022);
-        assertTrue(hasMin);
-
-        boolean hasMax = max.stream()
-                .anyMatch(i -> i.producer().equals("Produtor 2") && i.interval() == 10 && i.previousWin() == 2010 && i.followingWin() == 2020);
-        assertTrue(hasMax);
+        JsonNode expectedNode = mapper.readTree(expectedJson);
+        JsonNode actualNode = mapper.readTree(actualJson);
+        assertEquals(expectedNode, actualNode, "A resposta da API não está igual ao JSON esperado");
     }
 }
